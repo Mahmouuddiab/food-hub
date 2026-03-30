@@ -1,0 +1,43 @@
+name: food_hub
+
+description: "a modern recipe and meal discovery app that allows users to explore a wide variety of meals by category and cuisine. Built with Flutter using Clean Architecture and Cubit state management, the app is fast, responsive, and scalable."
+
+publish_to: 'none' # Remove this line if you wish to publish to pub.dev
+
+version: 1.0.0+1
+
+environment:
+  sdk: ^3.10.7
+
+
+dependencies:
+  flutter:
+    sdk: flutter
+
+  cupertino_icons: ^1.0.8
+  get_it: ^9.2.1
+  injectable: ^2.7.1+4
+  equatable: ^2.0.8
+  flutter_bloc: ^9.1.1
+  shared_preferences: ^2.5.5
+  google_fonts: ^8.0.2
+  dio: ^5.9.2
+  flutter_image_slideshow: ^0.1.6
+  flutter_rating_bar: ^4.0.1
+  flutter_svg: ^2.2.4
+
+dev_dependencies:
+  injectable_generator:
+  build_runner:
+  flutter_test:
+    sdk: flutter
+
+  flutter_lints: ^6.0.0
+
+flutter:
+
+  uses-material-design: true
+
+  assets:
+    - assets/
+
