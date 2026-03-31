@@ -3,8 +3,10 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:food_hub/core/di/di.dart';
 import 'package:food_hub/features/auth/presentation/cubit/auth_cubit.dart';
-import 'package:food_hub/features/auth/presentation/screen/register_screen.dart';
+import 'package:food_hub/features/auth/presentation/screen/login_screen.dart';
 import 'package:food_hub/features/home/presentation/cubit/home_cubit.dart';
+import 'package:food_hub/splash_screen.dart';
+import 'core/helper/cache_helper.dart';
 import 'firebase_options.dart';
 
 void main() async{
@@ -12,6 +14,7 @@ void main() async{
   await Firebase.initializeApp(
     options: DefaultFirebaseOptions.currentPlatform,
   );
+    await CacheHelper.init();
   configureDependencies();
   runApp(const MyApp());
 }
@@ -34,7 +37,7 @@ class MyApp extends StatelessWidget {
         title: 'Food Hub',
         debugShowCheckedModeBanner: false,
         theme: ThemeData(),
-        home: RegisterScreen(),
+        home: SplashScreen(),
       ),
     );
   }
