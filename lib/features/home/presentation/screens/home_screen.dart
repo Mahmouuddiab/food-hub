@@ -3,6 +3,8 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:food_hub/core/di/di.dart';
 import 'package:food_hub/core/utils/app_colors.dart';
 import 'package:food_hub/core/utils/app_sizes.dart';
+import 'package:food_hub/features/auth/presentation/cubit/auth_cubit.dart';
+import 'package:food_hub/features/auth/presentation/cubit/auth_state.dart';
 import 'package:food_hub/features/home/presentation/cubit/home_cubit.dart';
 import 'package:food_hub/features/home/presentation/cubit/home_state.dart';
 import 'package:food_hub/features/home/presentation/screens/recipe_details_screen.dart';
@@ -28,6 +30,7 @@ class _HomeScreenState extends State<HomeScreen> {
   void initState() {
     super.initState();
     homeCubit.getHome();
+    context.read<AuthCubit>().loadCurrentUser();
   }
 
   @override
@@ -50,44 +53,53 @@ class _HomeScreenState extends State<HomeScreen> {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   spacing: 20,
                   children: [
-                    Row(
-                      children: [
-                        // Avatar
-                        CircleAvatar(
-                          radius: 22,
-                          backgroundColor: AppColors.primary.withOpacity(0.1),
-                          child: Icon(
-                            Icons.person,
-                            color: AppColors.primary,
-                            size: 24,
-                          ),
-                        ),
+                    BlocBuilder<AuthCubit, AuthState>(
+                      builder: (context, state) {
+                        String userName = "Guest";
 
-                        const SizedBox(width: 12),
+                        if (state is AuthSuccess) {
+                          userName = state.user.name;
+                        }
 
-                        // Texts
-                        Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
+                        return Row(
                           children: [
-                            Text(
-                              "Hello, Mahmoud 👋",
-                              style: GoogleFonts.poppins(
-                                fontSize: 16,
-                                fontWeight: FontWeight.w500, // slightly bolder
+                            // Avatar
+                            CircleAvatar(
+                              radius: 22,
+                              backgroundColor: AppColors.primary.withOpacity(0.1),
+                              child: Icon(
+                                Icons.person,
+                                color: AppColors.primary,
+                                size: 24,
                               ),
                             ),
-                            const SizedBox(height: 2),
-                            Text(
-                              "Welcome back",
-                              style: GoogleFonts.poppins(
-                                fontSize: 13,
-                                fontWeight: FontWeight.w400,
-                                color: Colors.grey,
-                              ),
+
+                            const SizedBox(width: 12),
+
+                            // Texts
+                            Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                Text(
+                                  "Hello, $userName 👋",
+                                  style: GoogleFonts.poppins(
+                                    fontSize: 16,
+                                    fontWeight: FontWeight.w500,
+                                  ),
+                                ),
+                                const SizedBox(height: 2),
+                                Text(
+                                  "Welcome back",
+                                  style: GoogleFonts.poppins(
+                                    fontSize: 13,
+                                    color: Colors.grey,
+                                  ),
+                                ),
+                              ],
                             ),
                           ],
-                        ),
-                      ],
+                        );
+                      },
                     ),
                     CursorSlideShow(),
                     CustomRowBar(textOne: "Categories", textTwo: "View"),
