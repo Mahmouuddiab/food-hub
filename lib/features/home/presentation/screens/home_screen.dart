@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:food_hub/core/di/di.dart';
+import 'package:food_hub/core/utils/app_colors.dart';
 import 'package:food_hub/core/utils/app_sizes.dart';
 import 'package:food_hub/features/home/presentation/cubit/home_cubit.dart';
 import 'package:food_hub/features/home/presentation/cubit/home_state.dart';
@@ -11,6 +12,7 @@ import 'package:food_hub/features/home/presentation/widgets/custom_row_bar.dart'
 import 'package:food_hub/features/home/presentation/widgets/custom_slider_show.dart';
 import 'package:food_hub/features/home/presentation/widgets/recipe_item.dart';
 import 'package:food_hub/shared/app_loading.dart';
+import 'package:google_fonts/google_fonts.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});
@@ -45,8 +47,48 @@ class _HomeScreenState extends State<HomeScreen> {
                   vertical: AppSize.s5,
                 ),
                 child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
                   spacing: 20,
                   children: [
+                    Row(
+                      children: [
+                        // Avatar
+                        CircleAvatar(
+                          radius: 22,
+                          backgroundColor: AppColors.primary.withOpacity(0.1),
+                          child: Icon(
+                            Icons.person,
+                            color: AppColors.primary,
+                            size: 24,
+                          ),
+                        ),
+
+                        const SizedBox(width: 12),
+
+                        // Texts
+                        Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Text(
+                              "Hello, Mahmoud 👋",
+                              style: GoogleFonts.poppins(
+                                fontSize: 16,
+                                fontWeight: FontWeight.w500, // slightly bolder
+                              ),
+                            ),
+                            const SizedBox(height: 2),
+                            Text(
+                              "Welcome back",
+                              style: GoogleFonts.poppins(
+                                fontSize: 13,
+                                fontWeight: FontWeight.w400,
+                                color: Colors.grey,
+                              ),
+                            ),
+                          ],
+                        ),
+                      ],
+                    ),
                     CursorSlideShow(),
                     CustomRowBar(textOne: "Categories", textTwo: "View"),
                     SizedBox(
