@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:food_hub/core/utils/app_colors.dart';
+import 'package:food_hub/features/auth/presentation/screen/profile_screen.dart';
 import 'package:food_hub/features/home/presentation/screens/home_screen.dart';
 import 'package:food_hub/features/home/presentation/screens/meals_by_category_screen.dart';
 
@@ -17,7 +18,7 @@ class _RootState extends State<Root> with TickerProviderStateMixin {
     HomeScreen(),
     MealsByCategoryScreen(),
     Center(child: Text('Favorites')),
-    Center(child: Text('Profile')),
+    ProfileScreen(),
   ];
 
   final List<IconData> icons = [

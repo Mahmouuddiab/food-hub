@@ -1,4 +1,5 @@
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:food_hub/core/helper/cache_helper.dart';
 import 'package:food_hub/features/auth/data/models/user_model.dart';
 import 'package:injectable/injectable.dart';
 import 'auth_remote_ds.dart';
@@ -19,6 +20,8 @@ class AuthRemoteDsImpl implements AuthRemoteDataSource {
       );
 
       final user = credential.user;
+      CacheHelper.saveUserId(user?.uid?? "");
+      print("user id = ${user?.uid}");
       if (user == null) throw Exception("User not found");
 
       return UserModel.fromFirebase(user);

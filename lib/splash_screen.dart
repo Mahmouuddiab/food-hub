@@ -1,6 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:food_hub/core/utils/app_colors.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:food_hub/core/helper/cache_helper.dart';
+import 'package:food_hub/root.dart';
+import 'features/auth/presentation/screen/login_screen.dart';
+
 
 class SplashScreen extends StatefulWidget {
   const SplashScreen({super.key});
@@ -45,7 +49,7 @@ class _SplashScreenState extends State<SplashScreen> with TickerProviderStateMix
       duration: const Duration(milliseconds: 1500),
     );
 
-    // Logo fade animation (0 to 1)
+    // Logo fade animation
     _logoFadeAnimation = Tween<double>(begin: 0.0, end: 1.0).animate(
       CurvedAnimation(
         parent: _logoController,
@@ -71,10 +75,9 @@ class _SplashScreenState extends State<SplashScreen> with TickerProviderStateMix
     );
 
     // Image fade animation
-    _imageFadeAnimation = Tween<double>(
-      begin: 0.0,
-      end: 1.0,
-    ).animate(CurvedAnimation(parent: _imageController, curve: Curves.easeIn));
+    _imageFadeAnimation = Tween<double>(begin: 0.0, end: 1.0).animate(
+      CurvedAnimation(parent: _imageController, curve: Curves.easeIn),
+    );
 
     // Image slide from bottom
     _imageSlideAnimation =
@@ -89,10 +92,9 @@ class _SplashScreenState extends State<SplashScreen> with TickerProviderStateMix
 
     // Start animations sequence
     _startAnimations();
-    // Navigate after delay
   }
 
-  void _startAnimations() async {
+  Future<void> _startAnimations() async {
     // Start background subtle scale
     _scaleController.forward();
 
@@ -102,10 +104,26 @@ class _SplashScreenState extends State<SplashScreen> with TickerProviderStateMix
     // Start image animation
     await _imageController.forward();
 
-    // انتظر شويه بعد كل الأنيميشنز (اختياري)
-    await Future.delayed(const Duration(seconds: 4));
+    // Optional delay after animations
+    await Future.delayed(const Duration(seconds: 1));
 
-    // ثم تنقل على حسب التوكن
+    // Navigate based on cached user ID
+    final userId = CacheHelper.getUserId();
+    if (!mounted) return;
+
+    if (userId != null && userId.isNotEmpty) {
+      // User is logged in → go to Root screen
+      Navigator.pushReplacement(
+        context,
+        MaterialPageRoute(builder: (_) => const Root()),
+      );
+    } else {
+      // User not logged in → go to Login screen
+      Navigator.pushReplacement(
+        context,
+        MaterialPageRoute(builder: (_) => const LoginScreen()),
+      );
+    }
   }
 
   @override
@@ -122,7 +140,7 @@ class _SplashScreenState extends State<SplashScreen> with TickerProviderStateMix
       backgroundColor: AppColors.primary,
       body: SafeArea(
         child: Padding(
-          padding: EdgeInsets.all(8.0),
+          padding: const EdgeInsets.all(8.0),
           child: AnimatedBuilder(
             animation: _scaleController,
             builder: (context, child) {
