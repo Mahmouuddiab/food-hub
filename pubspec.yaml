@@ -25,6 +25,8 @@ dependencies:
   flutter_image_slideshow: ^0.1.6
   flutter_rating_bar: ^4.0.1
   flutter_svg: ^2.2.4
+  firebase_core: ^4.6.0
+  firebase_auth: ^6.3.0
 
 dev_dependencies:
   injectable_generator:

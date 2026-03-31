@@ -1,9 +1,14 @@
+import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:food_hub/core/di/di.dart';
-import 'package:food_hub/root.dart';
+import 'package:food_hub/features/auth/presentation/screen/register_screen.dart';
+import 'firebase_options.dart';
 
-void main() {
+void main() async{
   WidgetsFlutterBinding.ensureInitialized();
+  await Firebase.initializeApp(
+    options: DefaultFirebaseOptions.currentPlatform,
+  );
   configureDependencies();
   runApp(const MyApp());
 }
@@ -17,7 +22,7 @@ class MyApp extends StatelessWidget {
       title: 'Food Hub',
       debugShowCheckedModeBanner: false,
       theme: ThemeData(),
-      home: Root(),
+      home: RegisterScreen(),
     );
   }
 }
